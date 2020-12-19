@@ -1,31 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Redirect } from 'react-router';
 
 class Home extends Component{
     constructor(props) {
         super(props);
         this.delete = this.delete.bind(this);
         this.state = {
-            blogs: [],
-            redirect: false
+            blogs: []
         };
-    }
-
-    delete(delId) {
-        axios.get('http://localhost/Blog-api/delete-blog.php?id='+delId)
-        .then(
-            ({data}) => {
-                if(data.deleteStatus === 1) {
-                    console.log('Deleted')
-                    this.setState({
-                        redirect: true
-                    })
-                }
-            }
-        )
-        .catch(err => console.log(err))
     }
 
     componentDidMount() {
@@ -43,10 +26,6 @@ class Home extends Component{
     }
 
     render() {
-        if(this.state.redirect) {
-            console.log('Works');
-        }
-
         const viewBlog = this.state.blogs.map((blog) => {
             return(
                 <div className = "card">
@@ -56,7 +35,6 @@ class Home extends Component{
                     <div className = "card-body">
                         <h5 className = "card-title">Student Name :- { blog.name }</h5>
                         <p class="card-text">{ blog.wish }</p>
-                        <button onClick = { this.delete(blog.id) } className = "btn btn-danger">Delete</button>
                     </div>
                 </div>
             );
